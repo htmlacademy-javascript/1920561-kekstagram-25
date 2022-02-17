@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Андрей Лысенко](https://up.htmlacademy.ru/javascript/25/user/1920561).
-* Наставник: `Неизвестно`.
+* Наставник: [Владислав Доровлев](https://htmlacademy.ru/profile/dorovlev).
 
 ---
 
