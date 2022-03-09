@@ -3,6 +3,7 @@
 import { getRandomNumber } from './utils.js';
 import { createCommentatorsObject } from './user-post-comments.js';
 
+const USERSTOTAL = 25;
 const COMMENTSTOTAL = 3;
 
 const getPictureUrl = function (userIndex) {
@@ -36,4 +37,4 @@ const createUsersArray = function (usersNumber) {
   return USERSARRAY;
 };
 
-export {createUsersArray};
+createUsersArray(USERSTOTAL);
