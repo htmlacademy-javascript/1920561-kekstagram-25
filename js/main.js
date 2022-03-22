@@ -1,1 +1,1 @@
-import './news-feed.js';
+import './news-feed-pictures.js';

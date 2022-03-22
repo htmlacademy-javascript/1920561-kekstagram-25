@@ -7,8 +7,7 @@ const USERSTOTAL = 25;
 const COMMENTSTOTAL = 3;
 
 const getPictureUrl = function (userIndex) {
-  const FORWARDZERO = `0${  userIndex }`;
-  return (userIndex < 10 ? `photos/${  FORWARDZERO  }.jpg` : `photos/${  userIndex  }.jpg`);
+  return `photos/${  userIndex  }.jpg`;
 };
 
 const createCommentsArray = function (commentsNumber) {
@@ -37,4 +36,4 @@ const createUsersArray = function (usersNumber) {
   return USERSARRAY;
 };
 
-createUsersArray(USERSTOTAL);
+export const FEED = createUsersArray(USERSTOTAL);
