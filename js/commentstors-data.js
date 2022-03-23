@@ -1,5 +1,5 @@
-const COMMENTATORSTOTAL = 100;
-const MESSAGES = [
+const COMMENTATORS_TOTAL = 100;
+const messages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -8,7 +8,7 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const COMMENTATORSNAMES = [
+const commentatorsNames = [
   'Иван',
   'Мария',
   'Виктор',
@@ -17,4 +17,4 @@ const COMMENTATORSNAMES = [
   'Валерий',
 ];
 
-export {COMMENTATORSTOTAL, MESSAGES, COMMENTATORSNAMES};
+export {COMMENTATORS_TOTAL, messages, commentatorsNames};

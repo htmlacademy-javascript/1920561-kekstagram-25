@@ -3,8 +3,8 @@
 import { getRandomNumber } from './utils.js';
 import { createCommentatorsObject } from './user-post-comments.js';
 
-const USERSTOTAL = 25;
-const COMMENTSTOTAL = 3;
+const USERS_TOTAL = 25;
+const COMMENTS_TOTAL = 3;
 
 const getPictureUrl = (userIndex) => `photos/${  userIndex  }.jpg`;
 
@@ -22,7 +22,7 @@ const createUserObject = function (userIndex) {
     url: getPictureUrl(userIndex + 1),
     description: 'Моё фото',
     likes: getRandomNumber(15, 200),
-    comments: createCommentsArray(COMMENTSTOTAL),
+    comments: createCommentsArray(COMMENTS_TOTAL),
   };
 };
 
@@ -34,4 +34,4 @@ const createUsersArray = (usersNumber) => {
   return usersArray;
 };
 
-export const feed = createUsersArray(USERSTOTAL);
+export const feed = createUsersArray(USERS_TOTAL);
