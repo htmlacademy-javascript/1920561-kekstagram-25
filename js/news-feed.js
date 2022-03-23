@@ -6,11 +6,9 @@ import { createCommentatorsObject } from './user-post-comments.js';
 const USERSTOTAL = 25;
 const COMMENTSTOTAL = 3;
 
-const getPictureUrl = function (userIndex) {
-  return `photos/${  userIndex  }.jpg`;
-};
+const getPictureUrl = (userIndex) => `photos/${  userIndex  }.jpg`;
 
-const createCommentsArray = function (commentsNumber) {
+const createCommentsArray = (commentsNumber) => {
   const commentsArray = [];
   for (let i = 0; i < commentsNumber; i++) {
     commentsArray.push(createCommentatorsObject(i));
@@ -28,12 +26,12 @@ const createUserObject = function (userIndex) {
   };
 };
 
-const createUsersArray = function (usersNumber) {
-  const USERSARRAY = [];
+const createUsersArray = (usersNumber) => {
+  const usersArray = [];
   for (let i = 0; i < usersNumber; i++) {
-    USERSARRAY.push(createUserObject(i));
+    usersArray.push(createUserObject(i));
   }
-  return USERSARRAY;
+  return usersArray;
 };
 
-export const FEED = createUsersArray(USERSTOTAL);
+export const feed = createUsersArray(USERSTOTAL);
