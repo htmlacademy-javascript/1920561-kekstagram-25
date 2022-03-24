@@ -6,8 +6,10 @@ const getRandomNumber = (a, b) => {
   return Math.floor(RESULT);
 };
 
+const checkStringLength = (string, length) => string.length <= length;
+
 const getRandomArrayElement = (element) =>  element[getRandomNumber(0 , element.length - 1)];
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomNumber, getRandomArrayElement, isEscapeKey};
+export {getRandomNumber, getRandomArrayElement, isEscapeKey, checkStringLength};
