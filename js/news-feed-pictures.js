@@ -1,15 +1,15 @@
-import {  FEED  } from './news-feed.js';
+import {  feed  } from './news-feed.js';
 
-const PICTURESCONTAINER = document.querySelector('.pictures');
-const PICTURETEMPLATE = document.querySelector('#picture').content.querySelector('.picture');
-const PICTURESFRAGMENT = document.createDocumentFragment();
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const picturesFragment = document.createDocumentFragment();
 
-FEED.forEach((user) => {
-  const PICTUREELEMENT = PICTURETEMPLATE.cloneNode(true);
-  PICTUREELEMENT.querySelector('.picture__img').src = user.url;
-  PICTUREELEMENT.querySelector('.picture__likes').textContent = user.likes;
-  PICTUREELEMENT.querySelector('.picture__comments').textContent = user.comments.length;
-  PICTURESFRAGMENT.append(PICTUREELEMENT);
+feed.forEach((user) => {
+  const pictureElement = pictureTemplate.cloneNode(true);
+  pictureElement.querySelector('.picture__img').src = user.url;
+  pictureElement.querySelector('.picture__likes').textContent = user.likes;
+  pictureElement.querySelector('.picture__comments').textContent = user.comments.length;
+  picturesFragment.append(pictureElement);
 });
 
-PICTURESCONTAINER.append(PICTURESFRAGMENT);
+picturesContainer.append(picturesFragment);

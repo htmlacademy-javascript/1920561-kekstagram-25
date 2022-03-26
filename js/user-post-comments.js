@@ -1,29 +1,27 @@
 // Контроль комментариев под постом пользователя (ТЗ 4.7, 4.8)
 import {getRandomArrayElement, getRandomNumber} from './utils.js';
-import {COMMENTATORSTOTAL, MESSAGES, COMMENTATORSNAMES} from './commentstors-data.js';
+import {COMMENTATORS_TOTAL, messages, commentatorsNames} from './commentstors-data.js';
 
-const getAvatarUrl = function (userIndex) {
-  return `img/avatar-${  userIndex  }.svg`;
-};
+const getAvatarUrl = (userIndex) => `img/avatar-${  userIndex  }.svg`;
 
-const createCommentatorsId = function (maxId) {
-  const COMMENTATORSID = [];
-  for (let i = 0; COMMENTATORSID.length < maxId; i++) {
+const createCommentatorsId = (maxId) => {
+  const commentatorsId = [];
+  for (let i = 0; commentatorsId.length < maxId; i++) {
     const number = getRandomNumber(1, maxId);
-    if (!COMMENTATORSID.includes(number)) {
-      COMMENTATORSID.push(number);
+    if (!commentatorsId.includes(number)) {
+      commentatorsId.push(number);
     }
   }
-  return COMMENTATORSID;
+  return commentatorsId;
 };
 
-const createCommentatorsObject = function (userIndex) {
-  userIndex = getRandomArrayElement(createCommentatorsId(COMMENTATORSTOTAL));
+const createCommentatorsObject = (userIndex) => {
+  userIndex = getRandomArrayElement(createCommentatorsId(COMMENTATORS_TOTAL));
   return {
     id: userIndex,
     url: getAvatarUrl(getRandomNumber(1 , 6)),
-    message: getRandomArrayElement(MESSAGES),
-    name: getRandomArrayElement(COMMENTATORSNAMES),
+    message: getRandomArrayElement(messages),
+    name: getRandomArrayElement(commentatorsNames),
   };
 };
 
