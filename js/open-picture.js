@@ -1,6 +1,7 @@
 // Просмотр изображения загруженного другим пользователем на весь экран (ТЗ 4.4, 4-5)
 import {  feed  } from './news-feed.js';
 import {  isEscapeKey } from './utils.js';
+import {  bodySelector  } from './photo-uploader.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const userPictures = document.querySelectorAll('.picture');
@@ -18,13 +19,13 @@ const onBigPictureEscKeyDown = (evt) => {
 
 function openBigPicture () {
   bigPicture.classList.remove('hidden');
-  document.querySelector('body').classList.add('modal-open');
+  bodySelector.classList.add('modal-open');
   document.addEventListener('keydown', onBigPictureEscKeyDown);
 }
 
 function closeBigPicture () {
   bigPicture.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
+  bodySelector.classList.remove('modal-open');
   document.removeEventListener('keydown', onBigPictureEscKeyDown);
 }
 
