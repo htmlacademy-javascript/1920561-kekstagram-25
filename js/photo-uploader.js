@@ -1,6 +1,7 @@
 // Отправка данных на сервер (ТЗ 2.3; 2.4; 3)
 import {  isEscapeKey } from './utils.js';
 import {  getCheckedHashtags , cancelDoubleWhiteSpace  } from './editor-control-comment.js';
+import {  effectSlider , effectsOptions , updatePreviewImgFilter  } from './editor-control-effects.js';
 
 const bodySelector = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
@@ -27,6 +28,11 @@ function openUploadImg () {
 
 function closeUploadImg () {
   imgUploadOverlay.classList.add('hidden');
+
+  effectSlider.noUiSlider.updateOptions(effectsOptions.none.noUiSliderOption);
+  effectSlider.classList.add('hidden');
+  updatePreviewImgFilter('none');
+
   form.reset();
   bodySelector.classList.remove('modal-open');
   document.removeEventListener('keydown', onUploadImgEscKeyDown);

@@ -12,26 +12,22 @@ const checkHashtagIsEmpty = (array) => array[0] === '';
 
 const checkMaxHashtags = (array) => array.length <= MAX_HASHTAGS;
 
-const checkTextHashtags = (array) => {
-  for(let i = 0; i < array.length ; i++) {
-    if(re.test(array[i])) {
-      return true;
-    } else {
+const checkTextHashtags = (array) => array.some((elem) => !re.test(elem));
+
+const checkUniqueHashtags = (array) => {
+  for (let i = 1; i < array.length; i++) {
+    if (array[i - 1] === array [i]) {
       return false;
     }
   }
+  return true;
 };
 
 const getCheckedHashtags = (array) => {
-  if (!checkHashtagIsEmpty(array)){
-    if(checkMaxHashtags(array) && checkTextHashtags(array)){
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return true;
+  if (!checkHashtagIsEmpty(array)) {
+    return checkMaxHashtags(array) && !checkTextHashtags(array) && checkUniqueHashtags(array);
   }
+  return true;
 };
 
 export {  getCheckedHashtags , cancelDoubleWhiteSpace  };
