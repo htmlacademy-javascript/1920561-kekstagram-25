@@ -143,4 +143,4 @@ form.addEventListener('submit', (evt) => {
   }
 });
 
-export {  bodySelector  };
+export {  bodySelector, uploadingFile  };
