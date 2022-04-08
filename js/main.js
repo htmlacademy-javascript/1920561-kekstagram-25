@@ -1,4 +1,3 @@
-import './news-feed-pictures.js';
 import './open-picture.js';
 import './photo-uploader.js';
 import './editor-control-scale.js';

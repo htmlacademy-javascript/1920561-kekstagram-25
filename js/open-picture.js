@@ -1,14 +1,17 @@
-// Просмотр изображения загруженного другим пользователем на весь экран (ТЗ 4.4, 4-5)
-import {  feed  } from './news-feed.js';
-import {  isEscapeKey } from './utils.js';
+import {  isEscapeKey  } from './utils.js';
 import {  bodySelector  } from './photo-uploader.js';
+import {  getUserData  } from './api.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const userPictures = document.querySelectorAll('.picture');
 const pictureCancel = document.querySelector('#picture-cancel');
 const socialCommentatorsContainer = bigPicture.querySelector('.social__comments');
 const socialComment = socialCommentatorsContainer.querySelector('.social__comment');
+
 const commentsFragment = document.createDocumentFragment();
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const picturesFragment = document.createDocumentFragment();
+
 
 const onBigPictureEscKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -33,33 +36,39 @@ pictureCancel.addEventListener('click', () => {
   closeBigPicture();
 });
 
-const onPictureClick = (picture, data) => {
-  picture.addEventListener('click', () => {
-    // После открытия окна спрячьте блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .comments-loader, добавив им класс hidden, с ними мы разберёмся позже, в другом домашнем задании.
+const getNewsFeed = (array) => {
+  array.forEach((user) => {
+    const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').src = user.url;
+    pictureElement.querySelector('.picture__likes').textContent = user.likes;
+    pictureElement.querySelector('.picture__comments').textContent = user.comments.length;
+    picturesFragment.append(pictureElement);
+    picturesContainer.append(picturesFragment);
 
-    bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-    bigPicture.querySelector('.comments-loader').classList.add('hidden');
+    pictureElement.addEventListener('click', () => {
+      // После открытия окна спрячьте блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .comments-loader, добавив им класс hidden, с ними мы разберёмся позже, в другом домашнем задании.
+      bigPicture.querySelector('.social__comment-count').classList.add('hidden');
+      bigPicture.querySelector('.comments-loader').classList.add('hidden');
 
-    openBigPicture();
+      openBigPicture();
 
-    bigPicture.querySelector('.big-picture__img').querySelector('img').src = data.url;
-    bigPicture.querySelector('.likes-count').textContent = data.likes;
-    bigPicture.querySelector('.comments-count').textContent = data.comments.length;
-    bigPicture.querySelector('.social__caption').textContent = data.description;
+      bigPicture.querySelector('.big-picture__img').querySelector('img').src = user.url;
+      bigPicture.querySelector('.likes-count').textContent = user.likes;
+      bigPicture.querySelector('.comments-count').textContent = user.comments.length;
+      bigPicture.querySelector('.social__caption').textContent = user.description;
 
-    data.comments.forEach((elem) => {
-      const commentsElement = socialComment.cloneNode(true);
-      commentsElement.querySelector('.social__picture').src = elem.url;
-      commentsElement.querySelector('.social__picture').alt = elem.name;
-      commentsElement.querySelector('.social__text').textContent = elem.message;
-      commentsFragment.append(commentsElement);
+      user.comments.forEach((elem) => {
+        const commentsElement = socialComment.cloneNode(true);
+        commentsElement.querySelector('.social__picture').src = elem.avatar;
+        commentsElement.querySelector('.social__picture').alt = elem.name;
+        commentsElement.querySelector('.social__text').textContent = elem.message;
+        commentsFragment.append(commentsElement);
+      });
+
+      socialCommentatorsContainer.innerHTML = '';
+      socialCommentatorsContainer.append(commentsFragment);
     });
-
-    socialCommentatorsContainer.innerHTML = '';
-    socialCommentatorsContainer.append(commentsFragment);
   });
 };
 
-for (let i = 0; i < userPictures.length; i++) {
-  onPictureClick(userPictures[i], feed[i]);
-}
+getUserData(getNewsFeed);
