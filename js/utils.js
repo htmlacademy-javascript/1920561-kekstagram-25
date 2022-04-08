@@ -1,3 +1,10 @@
+const getRandomNumber = (a, b) => {
+  const MIN = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const MAX = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const RESULT = Math.random() * (MAX - MIN + 1) + MIN;
+  return Math.floor(RESULT);
+};
+
 const messageFragment = document.createDocumentFragment();
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
@@ -34,4 +41,14 @@ const createMessage = (messageTypeTemplate) => {
   closeMessageTest(messageElement , CloseButton);
 };
 
-export {  isEscapeKey, createMessage  };
+// Функция взята из интернета и доработана
+// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
+const debounce = (callback, timeoutDelay) => {
+  let timeoutid;
+  return (...rest) => {
+    clearTimeout(timeoutid);
+    timeoutid = setTimeout(() => { callback.apply(this, rest); }, timeoutDelay);
+  };
+};
+
+export {  isEscapeKey, createMessage , getRandomNumber, debounce  };
