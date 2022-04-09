@@ -41,6 +41,12 @@ const createMessage = (messageTypeTemplate) => {
   closeMessageTest(messageElement , CloseButton);
 };
 
+const createGetDataError = () => {
+  const messageElement = document.createElement('h1');
+  messageElement.classList.add('error__get-data');
+  messageElement.textContent = 'При загрузке данных с сервера произошла ошибка';
+  document.body.prepend(messageElement);
+};
 // Функция взята из интернета и доработана
 // Источник - https://www.freecodecamp.org/news/javascript-debounce-example
 const debounce = (callback, timeoutDelay) => {
@@ -51,4 +57,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {  isEscapeKey, createMessage , getRandomNumber, debounce  };
+export {  isEscapeKey, createMessage , getRandomNumber, debounce, createGetDataError  };

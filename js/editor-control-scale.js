@@ -1,11 +1,9 @@
-// Изменение масштаба загружаемого изображения (ТЗ 2.1)
-
+const SCALE_STEP = 25;
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
 const scaleValue = document.querySelector('.scale__control--value');
 const scaleControl = document.querySelectorAll('.scale__control');
 const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
-const SCALE_STEP = 25;
-const MIN_SCALE = 0;
-const MAX_SCALE = 100;
 let defaultScale = 100;
 
 for (let i = 0; i < scaleControl.length; i++) {

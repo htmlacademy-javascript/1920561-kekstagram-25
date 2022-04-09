@@ -1433,3 +1433,13 @@ main {
   background-color: #ffffff;
   border-radius: 5px;
 }
+
+.error__get-data {
+  font-family: "Open Sans", "Arial", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 0;
+  font-size: 30px;
+}

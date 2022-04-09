@@ -1,4 +1,3 @@
-// Отправка данных на сервер (ТЗ 2.3; 2.4; 3)
 import {  isEscapeKey, createMessage  } from './utils.js';
 import {
   getCheckedHashtags,
@@ -7,7 +6,6 @@ import {
   checkTextHashtags,
   checkUniqueHashtags,
   validateTextLength,
-  checkHashtagIsEmpty,
   MAX_HASHTAGS,
   MAX_COMMENT_LENGTH
 } from './editor-control-comment.js';
@@ -53,6 +51,7 @@ function closeUploadImg () {
   effectSlider.noUiSlider.updateOptions(effectsOptions.none.noUiSliderOption);
   effectSlider.classList.add('hidden');
   updatePreviewImgFilter('none');
+  pristine.reset();
 
   form.reset();
   bodySelector.classList.remove('modal-open');
@@ -91,6 +90,15 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
 };
 
+const getErrorMesage = (condition , errorMessage) => {
+  if (condition) {
+    pristine.addError(
+      hashtagsArea,
+      errorMessage
+    );
+  }
+};
+
 pristine.addValidator(
   imgComment,
   validateTextLength,
@@ -119,27 +127,10 @@ form.addEventListener('submit', (evt) => {
       },
       new FormData(evt.target)
     );
-  } else
-  if (!checkMaxHashtags(hashtagsArray)) {
-    pristine.addError(
-      hashtagsArea,
-      `Не больше ${MAX_HASHTAGS} хэштегов`
-    );
-  }
-  if (!checkTextHashtags(hashtagsArray)) {
-    pristine.addError(
-      hashtagsArea,
-      'Хэштеги должны быть от 2 до 20 символов и начинаться с #'
-    );
-    if (checkHashtagIsEmpty(hashtagsArray)) {
-      pristine.reset();
-    }
-  }
-  if (!checkUniqueHashtags(hashtagsArray)) {
-    pristine.addError(
-      hashtagsArea,
-      'Хэштеги не должны повторяться'
-    );
+  } else {
+    getErrorMesage(!checkMaxHashtags(hashtagsArray) , `Не больше ${MAX_HASHTAGS} хэштегов`);
+    getErrorMesage(checkTextHashtags(hashtagsArray) , 'Хэштеги должны быть от 2 до 20 символов и начинаться с #');
+    getErrorMesage(!checkUniqueHashtags(hashtagsArray) , 'Хэштеги не должны повторяться');
   }
 });
 
