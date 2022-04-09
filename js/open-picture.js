@@ -1,25 +1,23 @@
 import {  renderFeed , picturesContainer  } from './render-feed.js';
 import {  getRandomNumber , debounce  } from './utils.js';
 
+const MAX_RANDOM_PICTURES = 10;
+const RENDER_DELAY = 500;
 const filter = document.querySelector('.img-filters');
 const filterButtons = document.querySelectorAll('.img-filters__button');
-
 const filterButtonRandom = document.querySelector('#filter-random');
 const filterButtonDefault = document.querySelector('#filter-default');
 const filterButtonDiscussed = document.querySelector('#filter-discussed');
 
-const MAX_RANDOM_PICTURES = 10;
-const RENDER_DELAY = 500;
-
 const filterRandom = (array) => {
   picturesContainer.querySelectorAll('.picture').forEach((elem) => elem.remove());
-  let result = [];
-  while (result.length !== MAX_RANDOM_PICTURES) {
-    const elem = getRandomNumber(0 , array.length - 1);
-    result.push(array[elem]);
-    result = result.filter((value, index, arr) => arr.indexOf(value) === index);
+  const result = [];
+  for (let i = 0; result.length < MAX_RANDOM_PICTURES; i++) {
+    if (getRandomNumber(0,1)) {
+      result.push(array[i]);
+    }
   }
-  return result.slice().slice(0 , MAX_RANDOM_PICTURES);
+  return result;
 };
 
 const filterDiscussed = (array) => {

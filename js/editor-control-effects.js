@@ -1,4 +1,3 @@
-// Наложение эффекта на загружаемое изображение (ТЗ 2.2)
 import {  imgPreview  } from './editor-control-scale.js';
 
 const effectValue = document.querySelector('.effect-level__value');
