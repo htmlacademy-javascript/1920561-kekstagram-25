@@ -9,23 +9,23 @@ const filterButtonRandom = document.querySelector('#filter-random');
 const filterButtonDefault = document.querySelector('#filter-default');
 const filterButtonDiscussed = document.querySelector('#filter-discussed');
 
-const filterRandom = (array) => {
+const getFilterRandom = (array) => {
   picturesContainer.querySelectorAll('.picture').forEach((elem) => elem.remove());
-  const result = [];
-  for (let i = 0; result.length < MAX_RANDOM_PICTURES; i++) {
+  const results = [];
+  for (let i = 0; results.length < MAX_RANDOM_PICTURES; i++) {
     if (getRandomNumber(0,1)) {
-      result.push(array[i]);
+      results.push(array[i]);
     }
   }
-  return result;
+  return results;
 };
 
-const filterDiscussed = (array) => {
+const getFilterDiscussed = (array) => {
   picturesContainer.querySelectorAll('.picture').forEach((elem) => elem.remove());
   return array.slice().sort((a, b) => a.likes < b.likes ? 1 : -1);
 };
 
-const filterDefault = (array) => {
+const getFilterDefault = (array) => {
   picturesContainer.querySelectorAll('.picture').forEach((elem) => elem.remove());
   return array;
 };
@@ -43,11 +43,11 @@ const getNewsFeed = (array) => {
   filter.classList.remove('img-filters--inactive');
   renderFeed(array);
   getButtonClass(filterButtonRandom);
-  filterButtonRandom.addEventListener('click' , debounce(() => renderFeed(filterRandom(array)),  RENDER_DELAY));
+  filterButtonRandom.addEventListener('click' , debounce(() => renderFeed(getFilterRandom(array)),  RENDER_DELAY));
   getButtonClass(filterButtonDefault);
-  filterButtonDefault.addEventListener('click' , debounce(() => renderFeed(filterDefault(array)),  RENDER_DELAY));
+  filterButtonDefault.addEventListener('click' , debounce(() => renderFeed(getFilterDefault(array)),  RENDER_DELAY));
   getButtonClass(filterButtonDiscussed);
-  filterButtonDiscussed.addEventListener('click' , debounce(() => renderFeed(filterDiscussed(array)),  RENDER_DELAY));
+  filterButtonDiscussed.addEventListener('click' , debounce(() => renderFeed(getFilterDiscussed(array)),  RENDER_DELAY));
 };
 
 export {  getNewsFeed  };

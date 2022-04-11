@@ -1,8 +1,8 @@
 const getRandomNumber = (a, b) => {
-  const MIN = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const MAX = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const RESULT = Math.random() * (MAX - MIN + 1) + MIN;
-  return Math.floor(RESULT);
+  const min = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const max = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (max - min + 1) + min;
+  return Math.floor(result);
 };
 
 const messageFragment = document.createDocumentFragment();

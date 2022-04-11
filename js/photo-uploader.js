@@ -9,8 +9,13 @@ import {
   MAX_HASHTAGS,
   MAX_COMMENT_LENGTH
 } from './editor-control-comment.js';
-import {  effectSlider , effectsOptions , updatePreviewImgFilter  } from './editor-control-effects.js';
+import {  effectSlider,
+  effectsOptions,
+  updatePreviewImgFilter,
+  getEffectsEventListener,
+  removeEffectsEventListener  } from './editor-control-effects.js';
 import {  sendData  } from './api.js';
+import { resetScale, imgPreview } from './editor-control-scale.js';
 
 const bodySelector = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
@@ -24,6 +29,7 @@ const imgComment = form.querySelector('.text__description');
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 
+
 const pristine = new Pristine(form, {
   classTo: 'text',
   errorClass: 'text--invalid',
@@ -32,7 +38,7 @@ const pristine = new Pristine(form, {
   errorTextClass: 'text__error'
 });
 
-const onUploadImgEscKeyDown = (evt) => {
+const cb = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUploadImg();
@@ -42,7 +48,8 @@ const onUploadImgEscKeyDown = (evt) => {
 function openUploadImg () {
   imgUploadOverlay.classList.remove('hidden');
   bodySelector.classList.add('modal-open');
-  document.addEventListener('keydown', onUploadImgEscKeyDown);
+  document.addEventListener('keydown', cb);
+  getEffectsEventListener();
 }
 
 function closeUploadImg () {
@@ -52,19 +59,30 @@ function closeUploadImg () {
   effectSlider.classList.add('hidden');
   updatePreviewImgFilter('none');
   pristine.reset();
+  resetScale();
+  imgPreview.style.transform = 'none';
 
   form.reset();
   bodySelector.classList.remove('modal-open');
-  document.removeEventListener('keydown', onUploadImgEscKeyDown);
+  document.removeEventListener('keydown', cb);
+  removeEffectsEventListener();
 }
 
 const onCommentFocus = () => {
-  document.removeEventListener('keydown', onUploadImgEscKeyDown);
+  document.removeEventListener('keydown', cb);
 };
 
 const offCommentFocus = () => {
-  document.addEventListener('keydown', onUploadImgEscKeyDown);
+  document.addEventListener('keydown', cb);
 };
+
+hashtagsArea.addEventListener('focusin', () => {
+  onCommentFocus();
+});
+
+hashtagsArea.addEventListener('focusout', () => {
+  offCommentFocus();
+});
 
 imgComment.addEventListener('focusin', () => {
   onCommentFocus();
@@ -107,7 +125,7 @@ pristine.addValidator(
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const hashtagsArray = cancelDoubleWhiteSpace(hashtagsArea.value).split(' ');
+  const hashtagsArray = cancelDoubleWhiteSpace(hashtagsArea.value).toLowerCase().split(' ');
   const hashtagsValidationResult = getCheckedHashtags(hashtagsArray);
 
   const isValid = pristine.validate();
@@ -129,7 +147,7 @@ form.addEventListener('submit', (evt) => {
     );
   } else {
     getErrorMesage(!checkMaxHashtags(hashtagsArray) , `Не больше ${MAX_HASHTAGS} хэштегов`);
-    getErrorMesage(checkTextHashtags(hashtagsArray) , 'Хэштеги должны быть от 2 до 20 символов и начинаться с #');
+    getErrorMesage(checkTextHashtags(hashtagsArray) , 'Хэштеги не должны содержать спецсимволы (!@$%...), иметь длину от 2 до 20 символов и начинаться с #');
     getErrorMesage(!checkUniqueHashtags(hashtagsArray) , 'Хэштеги не должны повторяться');
   }
 });
