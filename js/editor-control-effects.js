@@ -2,6 +2,7 @@ import {  imgPreview  } from './editor-control-scale.js';
 
 const effectValue = document.querySelector('.effect-level__value');
 const effectSlider = document.querySelector('.effect-level__slider');
+const effectSliderWrapper = document.querySelector('.img-upload__effect-level');
 const effects = document.querySelectorAll('.effects__radio');
 
 noUiSlider.create(effectSlider, {
@@ -106,54 +107,62 @@ const updatePreviewImgFilter = (filterParam) => {
   imgPreview.style.filter = filterParam;
 };
 
-effectSlider.classList.add('hidden');
+effectSliderWrapper.classList.add('hidden');
 
-for (let i = 0; i < effects.length; i++) {
-  effects[i].addEventListener ('change', () => {
+function cb (evt) {
+  if (evt.target.id === 'effect-none') {
+    effectSliderWrapper.classList.add('hidden');
+    effectSlider.noUiSlider.updateOptions(effectsOptions.none.noUiSliderOption);
+    effectSlider.noUiSlider.on('update', () => {
+      updatePreviewImgFilter('none');
+    });
+  } else {
+    effectSliderWrapper.classList.remove('hidden');
+    effectSlider.classList.remove('hidden');
 
-    if (effects[i].id === 'effect-none') {
-      effectSlider.classList.add('hidden');
-      effectSlider.noUiSlider.updateOptions(effectsOptions.none.noUiSliderOption);
-    } else {
-
-      effectSlider.classList.remove('hidden');
-
-      if (effects[i].id === 'effect-chrome') {
-        effectSlider.noUiSlider.updateOptions(effectsOptions.chrome.noUiSliderOption);
-        effectSlider.noUiSlider.on('update', () => {
-          updatePreviewImgFilter(`grayscale(${effectValue.value})`);
-        });
-      }
-
-      if (effects[i].id === 'effect-sepia') {
-        effectSlider.noUiSlider.updateOptions(effectsOptions.sepia.noUiSliderOption);
-        effectSlider.noUiSlider.on('update', () => {
-          updatePreviewImgFilter(`sepia(${effectValue.value})`);
-        });
-      }
-
-      if (effects[i].id === 'effect-marvin') {
-        effectSlider.noUiSlider.updateOptions(effectsOptions.marvin.noUiSliderOption);
-        effectSlider.noUiSlider.on('update', () => {
-          updatePreviewImgFilter(`invert(${effectValue.value}%)`);
-        });
-      }
-
-      if (effects[i].id === 'effect-phobos') {
-        effectSlider.noUiSlider.updateOptions(effectsOptions.phobos.noUiSliderOption);
-        effectSlider.noUiSlider.on('update', () => {
-          updatePreviewImgFilter(`blur(${effectValue.value}px)`);
-        });
-      }
-
-      if (effects[i].id === 'effect-heat') {
-        effectSlider.noUiSlider.updateOptions(effectsOptions.heat.noUiSliderOption);
-        effectSlider.noUiSlider.on('update', () => {
-          updatePreviewImgFilter(`brightness(${effectValue.value})`);
-        });
-      }
+    if (evt.target.id === 'effect-chrome') {
+      effectSlider.noUiSlider.updateOptions(effectsOptions.chrome.noUiSliderOption);
+      effectSlider.noUiSlider.on('update', () => {
+        updatePreviewImgFilter(`grayscale(${effectValue.value})`);
+      });
     }
-  });
+
+    if (evt.target.id === 'effect-sepia') {
+      effectSlider.noUiSlider.updateOptions(effectsOptions.sepia.noUiSliderOption);
+      effectSlider.noUiSlider.on('update', () => {
+        updatePreviewImgFilter(`sepia(${effectValue.value})`);
+      });
+    }
+
+    if (evt.target.id === 'effect-marvin') {
+      effectSlider.noUiSlider.updateOptions(effectsOptions.marvin.noUiSliderOption);
+      effectSlider.noUiSlider.on('update', () => {
+        updatePreviewImgFilter(`invert(${effectValue.value}%)`);
+      });
+    }
+
+    if (evt.target.id === 'effect-phobos') {
+      effectSlider.noUiSlider.updateOptions(effectsOptions.phobos.noUiSliderOption);
+      effectSlider.noUiSlider.on('update', () => {
+        updatePreviewImgFilter(`blur(${effectValue.value}px)`);
+      });
+    }
+
+    if (evt.target.id === 'effect-heat') {
+      effectSlider.noUiSlider.updateOptions(effectsOptions.heat.noUiSliderOption);
+      effectSlider.noUiSlider.on('update', () => {
+        updatePreviewImgFilter(`brightness(${effectValue.value})`);
+      });
+    }
+  }
 }
 
-export {  effectSlider , effectsOptions , updatePreviewImgFilter };
+const getEffectsEventListener = () => {
+  effects.forEach((elem) => elem.addEventListener ('change', cb));
+};
+
+const removeEffectsEventListener = () => {
+  effects.forEach((elem) => elem.removeEventListener ('change', cb));
+};
+
+export {  effectSlider , effectsOptions, effectSliderWrapper, updatePreviewImgFilter, getEffectsEventListener, removeEffectsEventListener };

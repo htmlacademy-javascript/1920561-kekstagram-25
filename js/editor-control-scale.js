@@ -1,22 +1,27 @@
 const SCALE_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
+const DEFAULT_SCALE = 100;
 const scaleValue = document.querySelector('.scale__control--value');
-const scaleControl = document.querySelectorAll('.scale__control');
+const scaleControls = document.querySelectorAll('.scale__control');
 const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
-let defaultScale = 100;
+let changingScale = DEFAULT_SCALE;
 
-for (let i = 0; i < scaleControl.length; i++) {
-  scaleControl[i].addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('scale__control--smaller') && defaultScale > MIN_SCALE) {
-      defaultScale -= SCALE_STEP;
+for (let i = 0; i < scaleControls.length; i++) {
+  scaleControls[i].addEventListener('click', (evt) => {
+    if(evt.target.classList.contains('scale__control--smaller') && changingScale > MIN_SCALE) {
+      changingScale -= SCALE_STEP;
     }
-    if(evt.target.classList.contains('scale__control--bigger') && defaultScale < MAX_SCALE) {
-      defaultScale += SCALE_STEP;
+    if(evt.target.classList.contains('scale__control--bigger') && changingScale < MAX_SCALE) {
+      changingScale += SCALE_STEP;
     }
-    imgPreview.style.transform = `scale(${defaultScale / 100})`;
-    scaleValue.value = `${defaultScale}%`;
+    imgPreview.style.transform = `scale(${changingScale / 100})`;
+    scaleValue.value = `${changingScale}%`;
   });
 }
 
-export {  imgPreview  };
+const resetScale = () => {
+  changingScale = DEFAULT_SCALE;
+};
+
+export {  imgPreview, resetScale  };
