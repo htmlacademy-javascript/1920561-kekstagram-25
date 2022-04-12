@@ -62,6 +62,13 @@ const getComments = (dataArray, value) => {
   return rendedArray.length === dataArray.length;
 };
 
+function onCommentsLoaderButtonClick (evt) {
+  loaderCounter += MAX_COMMENT_SHOW;
+  if(getComments(currentCommentsList, loaderCounter)) {
+    evt.target.classList.add('hidden');
+  }
+}
+
 const renderFeed = (array) =>
   array.forEach((user) => {
     const pictureElement = pictureTemplate.cloneNode(true);
@@ -96,12 +103,5 @@ const renderFeed = (array) =>
     });
     picturesContainer.append(picturesFragment);
   });
-
-function onCommentsLoaderButtonClick (evt) {
-  loaderCounter += MAX_COMMENT_SHOW;
-  if(getComments(currentCommentsList, loaderCounter)) {
-    evt.target.classList.add('hidden');
-  }
-}
 
 export {  renderFeed , picturesContainer  };
