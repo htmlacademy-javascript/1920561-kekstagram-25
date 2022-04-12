@@ -157,12 +157,15 @@ function cb (evt) {
   }
 }
 
-const getEffectsEventListener = () => {
-  effects.forEach((elem) => elem.addEventListener ('change', cb));
+const addEffectsEventListener = () => effects.forEach((elem) => elem.addEventListener ('change', cb));
+
+const removeEffectsEventListener = () => effects.forEach((elem) => elem.removeEventListener ('change', cb));
+
+const resetEffects = () => {
+  effectSlider.noUiSlider.updateOptions(effectsOptions.none.noUiSliderOption);
+  effectSliderWrapper.classList.add('hidden');
+  updatePreviewImgFilter('none');
+  imgPreview.style.transform = 'none';
 };
 
-const removeEffectsEventListener = () => {
-  effects.forEach((elem) => elem.removeEventListener ('change', cb));
-};
-
-export {  effectSlider , effectsOptions, effectSliderWrapper, updatePreviewImgFilter, getEffectsEventListener, removeEffectsEventListener };
+export {  resetEffects, addEffectsEventListener, removeEffectsEventListener };

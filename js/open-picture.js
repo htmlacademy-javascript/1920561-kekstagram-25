@@ -12,10 +12,11 @@ const filterButtonDiscussed = document.querySelector('#filter-discussed');
 const getFilterRandom = (array) => {
   picturesContainer.querySelectorAll('.picture').forEach((elem) => elem.remove());
   const results = [];
+  const splicingArray = array.slice();
   for (let i = 0; results.length < MAX_RANDOM_PICTURES; i++) {
-    if (getRandomNumber(0,1)) {
-      results.push(array[i]);
-    }
+    const index = getRandomNumber(0, splicingArray.length - 1);
+    results.push(splicingArray[index]);
+    splicingArray.splice(index , 1);
   }
   return results;
 };

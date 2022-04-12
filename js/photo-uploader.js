@@ -9,14 +9,15 @@ import {
   MAX_HASHTAGS,
   MAX_COMMENT_LENGTH
 } from './editor-control-comment.js';
-import {  effectSlider,
-  effectsOptions,
-  updatePreviewImgFilter,
-  getEffectsEventListener,
-  effectSliderWrapper,
+import {
+  resetEffects,
+  addEffectsEventListener,
   removeEffectsEventListener  } from './editor-control-effects.js';
 import {  sendData  } from './api.js';
-import { resetScale, imgPreview } from './editor-control-scale.js';
+import {
+  resetScale,
+  addScaleEventListener,
+  removeScaleEventListener  } from './editor-control-scale.js';
 
 const bodySelector = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
@@ -50,24 +51,22 @@ function openUploadImg () {
   imgUploadOverlay.classList.remove('hidden');
   bodySelector.classList.add('modal-open');
   document.addEventListener('keydown', cb);
-  getEffectsEventListener();
+  addEffectsEventListener();
+  addScaleEventListener();
 }
 
 function closeUploadImg () {
   imgUploadOverlay.classList.add('hidden');
 
-  effectSlider.noUiSlider.updateOptions(effectsOptions.none.noUiSliderOption);
-  effectSlider.classList.add('hidden');
-  updatePreviewImgFilter('none');
-  effectSliderWrapper.classList.add('hidden');
   pristine.reset();
   resetScale();
-  imgPreview.style.transform = 'none';
-
+  resetEffects();
   form.reset();
+
   bodySelector.classList.remove('modal-open');
   document.removeEventListener('keydown', cb);
   removeEffectsEventListener();
+  removeScaleEventListener();
 }
 
 const onCommentFocus = () => {
