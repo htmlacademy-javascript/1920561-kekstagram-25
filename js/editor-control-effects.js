@@ -165,4 +165,4 @@ const removeEffectsEventListener = () => {
   effects.forEach((elem) => elem.removeEventListener ('change', cb));
 };
 
-export {  effectSlider , effectsOptions , updatePreviewImgFilter, getEffectsEventListener, removeEffectsEventListener };
+export {  effectSlider , effectsOptions, effectSliderWrapper, updatePreviewImgFilter, getEffectsEventListener, removeEffectsEventListener };

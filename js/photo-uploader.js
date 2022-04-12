@@ -13,6 +13,7 @@ import {  effectSlider,
   effectsOptions,
   updatePreviewImgFilter,
   getEffectsEventListener,
+  effectSliderWrapper,
   removeEffectsEventListener  } from './editor-control-effects.js';
 import {  sendData  } from './api.js';
 import { resetScale, imgPreview } from './editor-control-scale.js';
@@ -58,6 +59,7 @@ function closeUploadImg () {
   effectSlider.noUiSlider.updateOptions(effectsOptions.none.noUiSliderOption);
   effectSlider.classList.add('hidden');
   updatePreviewImgFilter('none');
+  effectSliderWrapper.classList.add('hidden');
   pristine.reset();
   resetScale();
   imgPreview.style.transform = 'none';
